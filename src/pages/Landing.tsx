@@ -1,8 +1,8 @@
-import React, {useState} from 'react'
+import {useState} from 'react'
 import Gamaepage from './Gamepage';
 
 function Landing() {
-    const [playerMark, setPlayerMark] = useState(null);
+    const [playerMark, setPlayerMark] = useState<string | null>(null);
     const [startGame, setStartGame] = useState(false);
 
 
