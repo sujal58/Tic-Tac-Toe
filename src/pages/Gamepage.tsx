@@ -3,6 +3,7 @@ import {ArrowClockwise} from 'react-bootstrap-icons';
 import Box from '../components/Box';
 import { checkWinner } from '../utils/checkWinner';
 import Confetti from 'react-confetti'
+import { computerIndex } from '../utils/computerIndex';
 
 type gamepageprops = {
     choosedMark: string,
@@ -17,7 +18,7 @@ function Gamepage(props:gamepageprops) {
     const [isWinner, setIsWinner] = useState(false);
     const [aPoint, setApoint] =  useState(0);
     const [bPoint, setBpoint] =  useState(0);
-    const [drawPoint, setDrawPoint] = useState(0);
+    const [drawPoint, setDrawpoint] = useState(0);
     const [isDraw, setIsDraw] = useState(false);
 
 
@@ -32,31 +33,33 @@ function Gamepage(props:gamepageprops) {
             height: window.innerHeight
         })
     }
-
-    useEffect(()=>{
-        handleWindowSize();
-    }, [onresize])
     
     function computerMoves(){
          if(props.isComputer && !isWinner){
-            if(!playerturn){
+            if(!playerturn && props.choosedMark != nextMove){
                 const nextSquare = [...boxData];
-                const availableSlot = nextSquare.map((val,index)=> val === null && index ? index : null).filter((index)=> index != null)
-                if(availableSlot.length > 0){
-                    setTimeout(() => {               
-                        const randomMoves = availableSlot[Math.floor(Math.random() * availableSlot.length)]    
-                        if(randomMoves) nextSquare[randomMoves] = nextMove;
+                const computerMove = computerIndex(props.choosedMark, nextSquare)
+                console.log(computerMove);
+                if(computerMove){
+                   setTimeout(() => {               
+                        nextSquare[computerMove] = nextMove;
                         setBoxData(nextSquare);
                         nextMove === "X" ? setnextMove("O") : setnextMove("X");
                     }, 2000);
                 }
             }
             setPlayerTurn(true);
+         }else{
+            setPlayerTurn(true);
          }
         }
+
+    useEffect(()=>{
+        handleWindowSize();
+    }, [onresize])
+
+
     
-
-
     useEffect(()=>{
         const winner = checkWinner(boxData);
         if(winner){
@@ -67,22 +70,23 @@ function Gamepage(props:gamepageprops) {
        
         let isBoxFull = boxData.some(val=> val === null);
         if(!isBoxFull && !isWinner){
-            setDrawPoint(draw => draw + 1);
+            setDrawpoint(draw => draw + 1);
             setIsDraw(true);  
         } 
 
         (!playerturn && props.isComputer) && computerMoves();
     },[boxData])
 
-     const handleClick = (index:number) => {
-        const nextSquare = [...boxData];
-        if(nextSquare[index] || isWinner){
-            return ;
-        }
-        nextSquare[index] = nextMove;
-        nextMove === "X" ? setnextMove("O") : setnextMove("X");
-        setBoxData(nextSquare);
-        setPlayerTurn(false);
+     const handleClick = (index:number) => { 
+         const nextSquare = [...boxData];
+
+         if(nextSquare[index] || isWinner){
+             return ;
+         }
+         nextSquare[index] = nextMove;
+            nextMove === "X" ? setnextMove("O") : setnextMove("X");
+            setBoxData(nextSquare);
+            setPlayerTurn(false); 
     }
 
     const handleReload = () => {
@@ -134,17 +138,17 @@ function Gamepage(props:gamepageprops) {
                     
                 </div>
             </div>
-            <div className="flex justify-between mt-2 w-full gap-4">
-                <div className={`flex flex-col items-center font-bold text-sm bg-slate-700 ${props.choosedMark === "X" ? "bg-cyan-500" : "bg-yellow-300"} rounded-md p-1 w-4/12`}>
-                    <p>Player1 ({props.choosedMark === "X" ? "x" : "O"})</p>
+            <div className="flex justify-between mt-2 w-full gap-3">
+                <div className={`flex flex-col items-center md:font-bold bg-slate-700 ${props.choosedMark === "X" ? "bg-cyan-500" : "bg-yellow-300"} rounded-md p-1 w-4/12`}>
+                    <p className='text-xs md:text-sm'>{props.isComputer ? "Player" : "Player1"} ({props.choosedMark})</p>
                     <p>{aPoint}</p>
                 </div>
-                <div className="flex flex-col items-center font-bold text-sm bg-slate-400 rounded-md p-1 w-4/12">
-                    <p>Draw</p>
+                <div className="flex flex-col items-center md:font-bold text-sm bg-slate-400 rounded-md p-1 w-4/12">
+                    <p className='text-xs md:text-sm'>Draw</p>
                     <p>{drawPoint}</p>
                 </div>
-                <div className={`flex flex-col items-center font-bold text-sm bg-slate-700 ${props.choosedMark === "X" ? "bg-yellow-300" : "bg-cyan-500"} rounded-md p-1 w-4/12`}>
-                    <p>Player2 ({props.choosedMark === "X" ? "O" : "X"})</p>
+                <div className={`flex flex-col items-center md:font-bold text-sm bg-slate-700 ${props.choosedMark === "X" ? "bg-yellow-300" : "bg-cyan-500"} rounded-md p-1 w-4/12`}>
+                    <p className='text-xs md:text-sm'>{props.isComputer ? "Computer" : "Player2"} ({props.choosedMark === "X" ? "O" : "X"})</p>
                     <p>{bPoint}</p>
                 </div>
 
