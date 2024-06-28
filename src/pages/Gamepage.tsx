@@ -100,8 +100,8 @@ function Gamepage(props:gamepageprops) {
 
     
   return (
-    <div className='flex bg-slate-800 h-screen justify-center items-center'>
-        <div className="h-3/4 justify-center w-6/12 flex flex-col  ">
+    <div className='flex bg-slate-800 h-screen justify-center'>
+        <div className="h-3/4 justify-center w-9/12 md:w-6/12  flex flex-col  ">
         {isWinner && <Confetti width={windowSize.width} height={windowSize.height}/>}
             <div className='flex justify-between items-end w-full flex-1 mb-2'>
                 <div className="playersmark flex gap-1">
