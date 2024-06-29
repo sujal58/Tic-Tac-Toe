@@ -38,10 +38,10 @@ function Gamepage(props:gamepageprops) {
          if(props.isComputer && !isWinner){
             if(!playerturn && props.choosedMark != nextMove){
                 const nextSquare = [...boxData];
-                const computerMove = computerIndex(props.choosedMark, nextSquare)
+                const computerMove:(number|undefined) = computerIndex(props.choosedMark, nextSquare)
                 console.log(computerMove);
-                if(computerMove){
-                   setTimeout(() => {               
+                if(computerMove != undefined){
+                   setTimeout(() => {      
                         nextSquare[computerMove] = nextMove;
                         setBoxData(nextSquare);
                         nextMove === "X" ? setnextMove("O") : setnextMove("X");
@@ -61,6 +61,7 @@ function Gamepage(props:gamepageprops) {
 
     
     useEffect(()=>{
+        console.log(boxData);
         const winner = checkWinner(boxData);
         if(winner){
             setIsWinner(true);

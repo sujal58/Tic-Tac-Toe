@@ -1,4 +1,4 @@
-export function computerIndex(playerSign:string, gamebox:(string | null)[]){
+export function computerIndex(playerSign:string, gamebox:(string | null)[]):number | undefined{
    const availableSlot = gamebox.map((val,index)=> val === null && index ? index : null).filter((index)=> index != null);
 
    const conditons = [
@@ -98,6 +98,5 @@ export function computerIndex(playerSign:string, gamebox:(string | null)[]){
    if(indextoreturn === null){
          indextoreturn = availableSlot[Math.floor(Math.random() * availableSlot.length)]    
          if(indextoreturn) return indextoreturn;
-
    }
 }
