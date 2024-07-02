@@ -26,7 +26,7 @@ export function computerIndex(playerSign:string, gamebox:(string | null)[]):numb
     if(reducedString === playerSign+playerSign){
         switch (i) {
             case 0:
-                console.log("012");
+                // console.log("012");
 
                 for (let i = 0; i < conditons[0].length; i++) {
                     if(gamebox[i] === null){
@@ -36,7 +36,7 @@ export function computerIndex(playerSign:string, gamebox:(string | null)[]):numb
                 break;
 
             case 1:
-                console.log("345");
+                // console.log("345");
 
                 for (let i = 3; i < 6; i++) {
                     if(gamebox[i] === null){
@@ -46,7 +46,7 @@ export function computerIndex(playerSign:string, gamebox:(string | null)[]):numb
                 break;
 
             case 2:
-                console.log("678");
+                // console.log("678");
 
                 for (let i = 6; i < 9; i++) {
                     if(gamebox[i] === null){
@@ -56,7 +56,7 @@ export function computerIndex(playerSign:string, gamebox:(string | null)[]):numb
                 break;
 
             case 3:
-                console.log("048");
+                // console.log("048");
 
                 if(gamebox[0] === null) return indextoreturn = 0;
                 else if(gamebox[4] === null) return indextoreturn = 4;
@@ -64,14 +64,14 @@ export function computerIndex(playerSign:string, gamebox:(string | null)[]):numb
                 break;
 
             case 4:
-                console.log("246");
+                // console.log("246");
                 if(gamebox[2] === null) return indextoreturn = 2;
                 else if(gamebox[4] === null) return indextoreturn = 4;
                 else return indextoreturn = 6;
                 break;
 
             case 5:
-                console.log("036");
+                // console.log("036");
 
                 if(gamebox[0] === null) return indextoreturn = 0;
                 else if(gamebox[3] === null) return indextoreturn = 3;
@@ -79,14 +79,14 @@ export function computerIndex(playerSign:string, gamebox:(string | null)[]):numb
                 break;
 
             case 6:
-                console.log("147");
+                // console.log("147");
                 if(gamebox[1] === null) return indextoreturn = 1;
                 else if(gamebox[4] === null) return indextoreturn = 4;
                 else return indextoreturn = 7;
                 break;
 
             case 7:
-                console.log("258");
+                // console.log("258");
                 if(gamebox[2] === null) return indextoreturn = 2;
                 else if(gamebox[5] === null) return indextoreturn = 5;
                 else return indextoreturn = 8;

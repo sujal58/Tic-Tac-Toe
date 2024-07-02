@@ -17,7 +17,7 @@ function Landing() {
   return (
     (startGame ? <Gamaepage choosedMark={playerMark} isComputer= {isComputer}/> : 
         <div className='h-screen bg-slate-800'>
-        <div className="container h-full w-screen flex justify-center items-center">
+        <div className="h-full w-screen flex justify-center items-center">
             <div className="innerbox flex flex-col items-center gap-5 w-full">
                 <div className="playersmark flex gap-4">
                     <h1 className='text-cyan-500 font-bold text-3xl'>X</h1>

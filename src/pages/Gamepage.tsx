@@ -39,7 +39,7 @@ function Gamepage(props:gamepageprops) {
             if(!playerturn && props.choosedMark != nextMove){
                 const nextSquare = [...boxData];
                 const computerMove:(number|undefined) = computerIndex(props.choosedMark, nextSquare)
-                console.log(computerMove);
+                // console.log(computerMove);
                 if(computerMove != undefined){
                    setTimeout(() => {      
                         nextSquare[computerMove] = nextMove;
@@ -59,35 +59,58 @@ function Gamepage(props:gamepageprops) {
     }, [onresize])
 
 
+    useEffect(()=>{
+        if(boxData.some((value)=>{
+            return value != null;
+        })){
+            console.log("hello");
+            setTimeout(() => { 
+                handleReload();
+                setIsDraw(false);
+            }, 3000);
+        }    
+    }, [isDraw])
     
     useEffect(()=>{
-        console.log(boxData);
         const winner = checkWinner(boxData);
         if(winner){
             setIsWinner(true);
             nextMove === props.choosedMark ? setBpoint(bPoint=> bPoint + 1)  :  setApoint(aPoint=> aPoint+1);
+            setnextMove(props.choosedMark);
             return;
         }
-       
+
         let isBoxFull = boxData.some(val=> val === null);
         if(!isBoxFull && !isWinner){
             setDrawpoint(draw => draw + 1);
-            setIsDraw(true);  
+            setIsDraw(true); 
+            setnextMove(props.choosedMark);
+            return;
         } 
-
         (!playerturn && props.isComputer) && computerMoves();
     },[boxData])
 
      const handleClick = (index:number) => { 
+        
          const nextSquare = [...boxData];
 
          if(nextSquare[index] || isWinner){
              return ;
          }
-         nextSquare[index] = nextMove;
-            nextMove === "X" ? setnextMove("O") : setnextMove("X");
+         if(playerturn && nextMove === props.choosedMark && props.isComputer){
+            nextSquare[index] = nextMove;
             setBoxData(nextSquare);
-            setPlayerTurn(false); 
+            setPlayerTurn(false);
+            nextMove === "X" ? setnextMove("O") : setnextMove("X");
+
+         }
+
+         if(playerturn && !props.isComputer){
+            nextSquare[index] = nextMove;
+            setBoxData(nextSquare);
+            nextMove === "X" ? setnextMove("O") : setnextMove("X");
+         }  
+
     }
 
     const handleReload = () => {
@@ -96,7 +119,7 @@ function Gamepage(props:gamepageprops) {
             copiedData[i] = null;
         }
         setBoxData(copiedData);
-        setIsWinner(false)
+        setIsWinner(false);
     }
 
     
@@ -110,10 +133,11 @@ function Gamepage(props:gamepageprops) {
                     <h1 className='text-yellow-300 font-bold text-xl'>O</h1>
                 </div>
                 <div className="flex gap-1 text-white">
-                   {!isWinner ? <h1 className='font-bold text-sm bg-slate-700 rounded-md p-1'>{nextMove === "X" ? "X" : "O"} TURN</h1>
+                   {!(isWinner || isDraw) ? <h1 className='font-bold text-sm bg-slate-700 rounded-md p-1'>{!props.isComputer ? nextMove === "X" ? "X" : "O" : nextMove === props.choosedMark && playerturn ? "Player" : "Computer"} TURN</h1>
+
                    : <div>
-                       <h1 className={`font-bold text-sm bg-slate-700 rounded-md p-1 ${isDraw && "hidden"}`}>{nextMove === "X" ? "O" : "X"} is WINNER</h1>
-                       <h1 className={`font-bold text-sm bg-slate-700 rounded-md p-1 ${isWinner && "hidden"}`}>{isDraw && "Game Draw"}</h1>
+                       <h1 className={`font-bold text-sm bg-slate-700 rounded-md p-1 ${isDraw && "hidden"}`}>{!props.isComputer ? nextMove === "X" ? "O" : "X" : nextMove === props.choosedMark ? "Computer" : "Player"} is WINNER</h1>
+                       <h1 className={`font-bold text-sm bg-slate-700 rounded-md p-1 ${isDraw ? "block" : "hidden"}`}>Game Draw</h1>
 
                    </div>
                     } 
