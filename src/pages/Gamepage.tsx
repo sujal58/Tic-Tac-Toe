@@ -136,7 +136,7 @@ function Gamepage(props:gamepageprops) {
                    {!(isWinner || isDraw) ? <h1 className='font-bold text-sm bg-slate-700 rounded-md p-1'>{!props.isComputer ? nextMove === "X" ? "X" : "O" : nextMove === props.choosedMark && playerturn ? "Player" : "Computer"} TURN</h1>
 
                    : <div>
-                       <h1 className={`font-bold text-sm bg-slate-700 rounded-md p-1 ${isDraw && "hidden"}`}>{!props.isComputer ? nextMove === "X" ? "O" : "X" : nextMove === props.choosedMark ? "Computer" : "Player"} is WINNER</h1>
+                       <h1 className={`font-bold text-sm bg-slate-700 rounded-md p-1 ${isDraw && "hidden"}`}>{!props.isComputer ? nextMove === "X" ? "X" : "O" : nextMove === props.choosedMark ? "Player" : "Computer"} is WINNER</h1>
                        <h1 className={`font-bold text-sm bg-slate-700 rounded-md p-1 ${isDraw ? "block" : "hidden"}`}>Game Draw</h1>
 
                    </div>
