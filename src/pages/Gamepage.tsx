@@ -39,7 +39,6 @@ function Gamepage(props:gamepageprops) {
             if(!playerturn && props.choosedMark != nextMove){
                 const nextSquare = [...boxData];
                 const computerMove:(number|undefined) = computerIndex(props.choosedMark, nextSquare)
-                // console.log(computerMove);
                 if(computerMove != undefined){
                    setTimeout(() => {      
                         nextSquare[computerMove] = nextMove;
@@ -63,7 +62,6 @@ function Gamepage(props:gamepageprops) {
         if(boxData.some((value)=>{
             return value != null;
         })){
-            console.log("hello");
             setTimeout(() => { 
                 handleReload();
                 setIsDraw(false);
@@ -76,7 +74,6 @@ function Gamepage(props:gamepageprops) {
         if(winner){
             setIsWinner(true);
             nextMove === props.choosedMark ? setBpoint(bPoint=> bPoint + 1)  :  setApoint(aPoint=> aPoint+1);
-            setnextMove(props.choosedMark);
             return;
         }
 
@@ -102,13 +99,13 @@ function Gamepage(props:gamepageprops) {
             setBoxData(nextSquare);
             setPlayerTurn(false);
             nextMove === "X" ? setnextMove("O") : setnextMove("X");
-
          }
 
          if(playerturn && !props.isComputer){
             nextSquare[index] = nextMove;
             setBoxData(nextSquare);
             nextMove === "X" ? setnextMove("O") : setnextMove("X");
+             console.log("next move");
          }  
 
     }
@@ -120,6 +117,7 @@ function Gamepage(props:gamepageprops) {
         }
         setBoxData(copiedData);
         setIsWinner(false);
+        setnextMove(props.choosedMark);
     }
 
     
@@ -136,7 +134,7 @@ function Gamepage(props:gamepageprops) {
                    {!(isWinner || isDraw) ? <h1 className='font-bold text-sm bg-slate-700 rounded-md p-1'>{!props.isComputer ? nextMove === "X" ? "X" : "O" : nextMove === props.choosedMark && playerturn ? "Player" : "Computer"} TURN</h1>
 
                    : <div>
-                       <h1 className={`font-bold text-sm bg-slate-700 rounded-md p-1 ${isDraw && "hidden"}`}>{!props.isComputer ? nextMove === "X" ? "X" : "O" : nextMove === props.choosedMark ? "Player" : "Computer"} is WINNER</h1>
+                       <h1 className={`font-bold text-sm bg-green-700 rounded-md p-1 ${isDraw && "hidden"}`}>{isWinner && (!props.isComputer ? nextMove === "X" ? "O"  : "X" : nextMove === props.choosedMark ? "Computer" : "Player")} is WINNER</h1>
                        <h1 className={`font-bold text-sm bg-slate-700 rounded-md p-1 ${isDraw ? "block" : "hidden"}`}>Game Draw</h1>
 
                    </div>
